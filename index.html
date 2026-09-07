@@ -93,9 +93,10 @@ h2 .g{color:var(--gpt)} h2 .c{color:var(--claude)} h2 .gd{color:var(--gold)}
 .tool{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
   padding:20px 24px;border:1px solid var(--line);border-radius:6px;background:var(--bg2);
   text-decoration:none;color:inherit;transition:.25s;position:relative;margin-bottom:11px}
-.tool::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(180deg,var(--gpt),var(--claude));transition:width .25s}
+.tool::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gpt),var(--claude));
+  transform:scaleX(0);transform-origin:left;transition:transform .25s}
 .tool:hover{transform:translateX(9px);border-color:rgba(242,238,230,.22)}
-.tool:hover::before{width:3px}
+.tool:hover::before{transform:scaleX(1)}
 .tool .nm{font-family:Benzin;font-weight:600;text-transform:uppercase;font-size:16px;letter-spacing:.03em}
 .tool .ds{color:var(--dim);font-size:14.5px;margin-top:3px}
 .pill{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
