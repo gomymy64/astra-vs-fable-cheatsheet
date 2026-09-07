@@ -105,10 +105,11 @@ h2 .g{color:var(--gpt)} h2 .c{color:var(--claude)} h2 .gd{color:var(--gold)}
 .pill.paid{color:var(--claude);background:rgba(232,121,75,.11);border:1px solid rgba(232,121,75,.32)}
 
 /* ── ШАГИ ── */
-.step{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:clamp(20px,3vw,48px);
+.step{display:grid;grid-template-columns:minmax(96px,150px) 1fr;gap:clamp(20px,3vw,48px);
   padding:clamp(34px,4.4vw,60px) 0;border-top:1px solid var(--line)}
-.step .num{font-family:Benzin;font-weight:700;font-size:clamp(58px,7.6vw,124px);line-height:.8;
-  color:transparent;-webkit-text-stroke:1.5px rgba(242,238,230,.24);position:sticky;top:96px;align-self:start}
+.step .num{font-family:Benzin;font-weight:700;font-size:clamp(44px,5vw,92px);line-height:.8;letter-spacing:-.03em;
+  color:transparent;-webkit-text-stroke:1.5px rgba(242,238,230,.24);position:sticky;top:96px;align-self:start;
+  max-width:100%;white-space:nowrap}
 .step h3{font-size:clamp(21px,2.5vw,36px);font-weight:700;margin:0 0 14px}
 .step h3 .g{color:var(--gpt)} .step h3 .c{color:var(--claude)}
 .step .desc{color:var(--dim);margin:0 0 22px;max-width:60ch}
