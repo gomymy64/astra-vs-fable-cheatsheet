@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Материалы к Уроку GPT-6 ASTRA VS FABLE 5.1 | Мастодонт</title>
+<style>
+@font-face{font-family:Benzin;src:url('fonts/Benzin-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:Benzin;src:url('fonts/Benzin-Semibold.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:Benzin;src:url('fonts/Benzin-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+@font-face{font-family:Onest;src:url('fonts/Onest-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:Onest;src:url('fonts/Onest-Medium.ttf') format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:Onest;src:url('fonts/Onest-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+
+:root{
+  --bg:#0B0B0C; --bg2:#121214; --bg3:#191A1D;
+  --ink:#F2EEE6; --dim:#9A968E; --faint:#5A5751;
+  --gpt:#19C39A; --claude:#E8794B; --gold:#E8C36A; --line:rgba(242,238,230,.10);
+}
+*{box-sizing:border-box}
+html{scrollbar-width:thin;scrollbar-color:var(--gpt) var(--bg2)}
+html::-webkit-scrollbar{width:12px}
+html::-webkit-scrollbar-track{background:var(--bg2)}
+html::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gpt),var(--claude));border-radius:8px;border:3px solid var(--bg2)}
+html::-webkit-scrollbar-thumb:hover{background:var(--gpt)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Onest,sans-serif;font-size:clamp(16px,1.15vw,19px);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+#cursorglow{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:1;left:0;top:0;
+  background:radial-gradient(circle,rgba(25,195,154,.09),transparent 62%);transform:translate(-50%,-50%);transition:opacity .4s;opacity:0}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:10000;background:linear-gradient(90deg,var(--gpt),var(--gold),var(--claude))}
+
+h1,h2,h3,.bnz{font-family:Benzin,Impact,sans-serif;text-transform:uppercase;letter-spacing:.005em;line-height:.94;overflow:visible}
+.mono{font-family:ui-monospace,'Cascadia Mono',Menlo,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+
+nav{position:sticky;top:0;z-index:900;background:rgba(11,11,12,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,var(--gpt),var(--claude),transparent) 1;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(16px,4vw,64px);flex-wrap:wrap}
+nav .brand{font-family:Benzin;font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase}
+nav .links{display:flex;gap:8px;flex-wrap:wrap}
+nav a{color:var(--dim);text-decoration:none;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 13px;border:1px solid var(--line);border-radius:999px;transition:.22s;font-family:ui-monospace,monospace}
+nav a:hover{color:var(--bg);background:var(--ink);border-color:var(--ink)}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,64px)}
+section{position:relative;z-index:2}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero .shot{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden}
+.hero .shot img{width:100%;height:auto;display:block;will-change:transform}
+.hero .veil{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(11,11,12,.72) 0%,rgba(11,11,12,.12) 34%,rgba(11,11,12,.55) 74%,var(--bg) 100%)}
+.hero .txt{position:absolute;left:0;right:0;bottom:clamp(24px,5vw,72px);padding:0 clamp(16px,4vw,64px)}
+.badge{display:inline-block;font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(232,195,106,.42);border-radius:999px;padding:7px 15px;margin-bottom:20px;background:rgba(232,195,106,.06)}
+h1{font-size:clamp(38px,8.2vw,132px);font-weight:700;margin:0 0 18px;max-width:15ch;overflow-wrap:break-word}
+h1 em{font-style:normal;display:block;padding-top:.12em;margin-bottom:-.10em}
+h1 .g{color:var(--gpt);text-shadow:0 0 42px rgba(25,195,154,.4)}
+h1 .c{color:var(--claude);text-shadow:0 0 42px rgba(232,121,75,.4)}
+.sub{color:var(--dim);max-width:56ch;font-size:clamp(16px,1.35vw,21px);margin:0 0 26px}
+.ytbtn{display:inline-flex;align-items:center;gap:11px;background:var(--ink);color:var(--bg);text-decoration:none;
+  font-family:Benzin;font-weight:700;text-transform:uppercase;font-size:14px;letter-spacing:.06em;
+  padding:15px 26px;border-radius:4px;transition:.22s}
+.ytbtn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.6)}
+.ytbtn.pending{background:transparent;color:var(--faint);border:1px dashed var(--faint);cursor:default}
+.ytbtn.pending:hover{transform:none;box-shadow:none}
+
+/* ── СЛУЖЕБНАЯ СТРОКА ── */
+.rail{display:flex;justify-content:space-between;align-items:center;gap:16px;color:var(--faint);
+  padding:22px 0 12px;border-bottom:1px solid var(--line);margin-bottom:clamp(40px,6vw,80px);flex-wrap:wrap}
+
+h2{font-size:clamp(28px,4.6vw,66px);font-weight:700;margin:0 0 12px}
+h2 .g{color:var(--gpt)} h2 .c{color:var(--claude)} h2 .gd{color:var(--gold)}
+.lead{color:var(--dim);max-width:62ch;margin:0 0 clamp(30px,4vw,52px)}
+
+.block{padding:clamp(56px,8vw,120px) 0}
+
+/* ── КАРТОЧКИ ── */
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+.card{position:relative;background:linear-gradient(152deg,var(--bg3),var(--bg2));border:1px solid var(--line);
+  border-radius:6px;padding:28px;overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.3,1),border-color .3s;
+  transform-style:preserve-3d}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gpt),var(--claude))}
+.card::after{content:'';position:absolute;top:-70px;right:-70px;width:190px;height:190px;border-radius:50%;
+  background:radial-gradient(circle,rgba(25,195,154,.13),transparent 68%);pointer-events:none}
+.card:hover{border-color:rgba(242,238,230,.24)}
+.card h3{font-size:17px;font-weight:700;margin:14px 0 9px;letter-spacing:.02em}
+.card p{margin:0;color:var(--dim);font-size:15.5px}
+.card .ic{font-size:26px;line-height:1}
+
+/* ── ИНСТРУМЕНТЫ ── */
+.tool{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:20px 24px;border:1px solid var(--line);border-radius:6px;background:var(--bg2);
+  text-decoration:none;color:inherit;transition:.25s;position:relative;margin-bottom:11px}
+.tool::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(180deg,var(--gpt),var(--claude));transition:width .25s}
+.tool:hover{transform:translateX(9px);border-color:rgba(242,238,230,.22)}
+.tool:hover::before{width:3px}
+.tool .nm{font-family:Benzin;font-weight:600;text-transform:uppercase;font-size:16px;letter-spacing:.03em}
+.tool .ds{color:var(--dim);font-size:14.5px;margin-top:3px}
+.pill{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;white-space:nowrap}
+.pill.free{color:var(--gpt);background:rgba(25,195,154,.11);border:1px solid rgba(25,195,154,.32)}
+.pill.paid{color:var(--claude);background:rgba(232,121,75,.11);border:1px solid rgba(232,121,75,.32)}
+
+/* ── ШАГИ ── */
+.step{display:grid;grid-template-columns:minmax(120px,180px) 1fr;gap:clamp(20px,3vw,48px);
+  padding:clamp(34px,4.4vw,60px) 0;border-top:1px solid var(--line)}
+.step .num{font-family:Benzin;font-weight:700;font-size:clamp(58px,7.6vw,124px);line-height:.8;
+  color:transparent;-webkit-text-stroke:1.5px rgba(242,238,230,.24);position:sticky;top:96px;align-self:start}
+.step h3{font-size:clamp(21px,2.5vw,36px);font-weight:700;margin:0 0 14px}
+.step h3 .g{color:var(--gpt)} .step h3 .c{color:var(--claude)}
+.step .desc{color:var(--dim);margin:0 0 22px;max-width:60ch}
+.acts{list-style:none;padding:0;margin:0 0 24px}
+.acts li{position:relative;padding-left:26px;margin-bottom:10px;color:var(--ink);font-size:16px}
+.acts li::before{content:'▸';position:absolute;left:0;color:var(--gold)}
+.note{border-left:2px solid var(--gold);background:rgba(232,195,106,.055);padding:15px 20px;border-radius:0 5px 5px 0;
+  color:var(--dim);font-size:15.5px;margin:22px 0 0}
+.note b{color:var(--ink)}
+
+/* ── ПРОМПТ ── */
+.pr{margin:24px 0 0;border:1px solid var(--line);border-left:3px solid transparent;
+  border-image:linear-gradient(180deg,var(--gpt),var(--claude)) 1;border-radius:0;background:var(--bg2);
+  box-shadow:0 22px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(242,238,230,.05);overflow:hidden}
+.pr .hd{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;
+  border-bottom:1px solid var(--line);background:var(--bg3);flex-wrap:wrap}
+.pr .lb{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.cp{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:7px 14px;transition:.2s}
+.cp:hover{background:var(--ink);color:var(--bg)}
+.cp.ok{background:var(--gpt);color:#04150F;border-color:var(--gpt)}
+.pr pre{margin:0;padding:22px;font-family:ui-monospace,'Cascadia Mono',Menlo,monospace;font-size:13.5px;line-height:1.72;
+  white-space:pre-wrap;word-break:break-word;color:#DCD8D0;max-height:480px;overflow:auto;
+  scrollbar-width:thin;scrollbar-color:var(--gpt) var(--bg3)}
+.pr pre::-webkit-scrollbar{width:10px}
+.pr pre::-webkit-scrollbar-track{background:var(--bg3)}
+.pr pre::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--gpt),var(--claude));border-radius:8px;border:2px solid var(--bg3)}
+
+/* ── ПОЛНОЭКРАННЫЕ КАДРЫ ── */
+.plate{position:relative;overflow:hidden;margin:clamp(40px,6vw,88px) 0}
+.plate img{width:100%;height:auto;display:block;will-change:transform}
+.plate .cap{position:absolute;left:clamp(16px,4vw,64px);bottom:clamp(20px,3.4vw,52px);right:clamp(16px,4vw,64px)}
+.plate .kick{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.plate .big{font-family:Benzin;font-weight:700;text-transform:uppercase;font-size:clamp(22px,3.6vw,52px);line-height:1;max-width:20ch}
+.plate .grad{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,11,12,.9),rgba(11,11,12,.1) 52%,transparent)}
+
+/* ── ССЫЛКИ ── */
+.lk{display:flex;align-items:center;gap:16px;padding:18px 22px;border:1px solid var(--line);border-radius:6px;
+  background:var(--bg2);text-decoration:none;color:inherit;transition:.24s;margin-bottom:10px}
+.lk:hover{border-color:rgba(242,238,230,.24);transform:translateX(7px)}
+.lk .ic{font-size:21px}
+.lk .nm{font-family:Benzin;font-weight:600;text-transform:uppercase;font-size:15px;letter-spacing:.03em}
+.lk .u{color:var(--faint);font-size:13px;font-family:ui-monospace,monospace;word-break:break-all}
+
+/* ── CTA ── */
+.cta{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:8px;
+  padding:clamp(30px,4.4vw,60px);overflow:hidden;cursor:pointer;animation:pulse 3s ease-in-out infinite;margin:clamp(48px,6vw,96px) 0}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 rgba(232,195,106,0)}50%{box-shadow:0 0 62px rgba(232,195,106,.14)}}
+.cta .hit{position:absolute;inset:0;z-index:1}
+.cta::before{content:'';position:absolute;top:-110px;left:-110px;width:330px;height:330px;border-radius:50%;
+  background:radial-gradient(circle,rgba(25,195,154,.15),transparent 66%);pointer-events:none}
+.cta::after{content:'';position:absolute;bottom:-110px;right:-110px;width:330px;height:330px;border-radius:50%;
+  background:radial-gradient(circle,rgba(232,121,75,.15),transparent 66%);pointer-events:none}
+.cta > *:not(.hit){position:relative;z-index:2}
+.cta h2{margin-bottom:30px}
+.ctacols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,46px);margin-bottom:34px}
+@media(max-width:720px){.ctacols{grid-template-columns:1fr}}
+.ctacols h4{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 14px;font-weight:400}
+.ctacols ul{list-style:none;padding:0;margin:0}
+.ctacols li{margin-bottom:11px;font-size:15.5px;color:var(--ink)}
+.ctabot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding-top:26px;border-top:1px solid var(--line)}
+.ctabot .fr{font-family:Benzin;font-weight:600;text-transform:uppercase;font-size:16px;letter-spacing:.03em}
+.ctabot .fr span{color:var(--gpt)}
+.ctabtn{position:relative;z-index:3;display:inline-block;background:var(--gold);color:#171204;text-decoration:none;
+  font-family:Benzin;font-weight:700;text-transform:uppercase;font-size:14.5px;letter-spacing:.05em;
+  padding:16px 30px;border-radius:5px;transition:.22s}
+.ctabtn:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(232,195,106,.3)}
+
+footer{border-top:1px solid var(--line);padding:clamp(40px,5vw,72px) 0;color:var(--faint)}
+footer .fb{font-family:Benzin;font-weight:700;text-transform:uppercase;font-size:22px;color:var(--ink);letter-spacing:.05em}
+footer .ft{margin-top:7px;font-size:15px}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--ink)}
+
+.rv{opacity:0;transform:translateY(26px) scale(.99)}
+.rv.in{opacity:1;transform:none;transition:opacity .72s cubic-bezier(.2,.7,.3,1),transform .72s cubic-bezier(.2,.7,.3,1)}
+@media(prefers-reduced-motion:reduce){.rv,.rv.in{opacity:1;transform:none;transition:none}
+  #cursorglow{display:none}.cta{animation:none}}
+@media(max-width:760px){.step{grid-template-columns:1fr}.step .num{position:static;font-size:56px}}
+@media(min-width:2200px){.wrap{max-width:1480px}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div id="cursorglow"></div>
+
+<nav>
+  <div class="brand">МАСТОДОНТ</div>
+  <div class="links">
+    <a href="#tools">Инструменты</a>
+    <a href="#steps">Шаги</a>
+    <a href="#links">Ссылки</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="shot"><img id="heroimg" src="img/01-ring.png" alt=""></div>
+  <div class="veil"></div>
+  <div class="txt">
+    <div class="badge">Материалы к уроку</div>
+    <h1><em class="g">GPT-6 ASTRA</em><em>ПРОТИВ</em><em class="c">FABLE 5.1</em></h1>
+    <p class="sub">Четыре задачи, две модели, один промпт на обе. Клон Fortnite в браузере, лендинг, моушн-графика и 3D-приложение с настоящей базой.</p>
+    <span class="ytbtn pending">Ссылка на видео появится после релиза</span>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="rail">
+    <span class="mono">§ Материалы / 05 шагов</span>
+    <span class="mono">ИИ Мастодонт · 2026</span>
+  </div>
+</div>
+
+<section class="block" id="learn">
+  <div class="wrap">
+    <h2 class="rv">ЧТО ТЫ <span class="g">НАУЧИШЬСЯ</span> ДЕЛАТЬ</h2>
+    <p class="lead rv">Всё, что в видео делается на экране, лежит здесь промптами. Копируй и повторяй.</p>
+    <div class="grid">
+      <div class="card rv"><div class="ic">🎮</div><h3>Клон Fortnite в браузере</h3><p>Один промпт плюс референс-картинки — играбельная игра с ботами, лутом и строительством.</p></div>
+      <div class="card rv"><div class="ic">🎨</div><h3>Лендинг без нейрослопа</h3><p>Тот же промпт на обе модели — и видно, какая понимает дизайн, а какая рисует шаблон.</p></div>
+      <div class="card rv"><div class="ic">🎬</div><h3>Моушн-графика без рук</h3><p>Модель сама дёргает видеогенератор через MCP. В сам генератор ты не заходишь.</p></div>
+      <div class="card rv"><div class="ic">🌍</div><h3>3D-приложение с базой</h3><p>Глобус с дугами перелётов — и настоящее сохранение, которое переживает перезагрузку.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="tools" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="rv">ЧТО <span class="c">ПОНАДОБИТСЯ</span></h2>
+    <p class="lead rv">Обе модели платные — это и есть предмет сравнения. Всё остальное дешевле или бесплатно.</p>
+    <a class="tool rv" href="https://chatgpt.com" target="_blank" rel="noopener">
+      <div><div class="nm">Codex · GPT-6 Astra</div><div class="ds">Модель OpenAI, одна из двух героинь теста</div></div>
+      <span class="pill paid">подписка</span></a>
+    <a class="tool rv" href="https://claude.ai" target="_blank" rel="noopener">
+      <div><div class="nm">Claude · Fable 5.1</div><div class="ds">Модель Anthropic, вторая героиня теста</div></div>
+      <span class="pill paid">подписка</span></a>
+    <a class="tool rv" href="https://higgsfield.ai" target="_blank" rel="noopener">
+      <div><div class="nm">Higgsfield MCP</div><div class="ds">Мостик, через который модель сама снимает видео</div></div>
+      <span class="pill paid">подписка</span></a>
+    <a class="tool rv" href="https://supabase.com" target="_blank" rel="noopener">
+      <div><div class="nm">Supabase</div><div class="ds">База, авторизация и хранилище для собранного приложения</div></div>
+      <span class="pill free">бесплатный тариф</span></a>
+    <div class="note rv"><b>Ещё понадобится папка со скриншотами Fortnite</b> — шесть-восемь штук: интерфейс, вид с прицела, батл-бас, оружие, лобби, остров спавна, сундук, карта. Они идут в первый промпт вложениями.</div>
+  </div>
+</section>
+
+<section id="steps">
+  <div class="wrap">
+
+    <div class="step">
+      <div class="num">01</div>
+      <div>
+        <h3>КЛОН <span class="g">FORTNITE</span> ОДНИМ ПРОМПТОМ</h3>
+        <p class="desc">Один и тот же текст уходит обеим моделям, к нему прикладываются скриншоты. Дальше не трогаешь ничего — смотришь, что каждая соберёт за один заход.</p>
+        <ul class="acts">
+          <li>Собери шесть-восемь скриншотов Fortnite и держи их в одной папке</li>
+          <li>Вставь промпт, приложи картинки, отправь</li>
+          <li>Жди: у одной модели это заняло сорок пять минут, у другой полтора часа</li>
+        </ul>
+        <div class="pr">
+          <div class="hd"><span class="lb">💬 Промпт 1 — клон Fortnite</span><button class="cp">Скопировать</button></div>
+          <pre>Собери мне играбельный в браузере клон Fortnite Battle Royale (Глава 1, «OG»-эпоха). Я показываю это аудитории как демонстрацию того, насколько хорошо модель умеет воссоздать настоящую игру, поэтому планка — зрелище: должно выглядеть и ощущаться как Fortnite, а не как прототип.
+
+Вложения (повтори их настолько точно, насколько сможешь)
+
+1. HUD — точная внутриигровая раскладка интерфейса: полосы здоровья и щита, таймер шторма, компас, миникарта, счётчик материалов, слоты построек, панель оружия с количеством патронов, лента убийств.
+2. Прицеливание — как выглядит приближение через штурмовую винтовку (третье лицо, из-за плеча, прицел сужается, всплывают цифры урона).
+3. Батл-бас — автобус и модель воздушного шара.
+4. Оружие — полный набор оружия и предметов Главы 1 с вариантами редкости. Повтори модели и используй именно эти предметы.
+5. Экран лобби — домашний экран. Выбор Solo / Duo / Squad и кнопка READY.
+6. Остров спавна — предматчевый остров.
+7. Сундук — модель сундука с лутом.
+8. Карта — остров OG Главы 1. Построй эту карту: именованные точки интереса, дороги, река, озеро, гора, береговые линии.
+
+Прежде чем строить, изучи всё, что я не указал: точные стили моделей, тайминги фаз шторма, характеристики оружия, механику строительства, высоту раскрытия глайдера. Везде, где я молчу, повторяй поведение настоящего Fortnite.
+
+Стек и ограничения
+
+- Three.js, Vite, TypeScript. Работает локально, без бэкенда.
+- Цель — 60 fps в Chrome на приличном игровом ПК при 99 ботах плюс я. Оптимизируй агрессивно: LOD, инстансинг, упрощённая симуляция ботов вдали от игрока. Когда точность и производительность конфликтуют — побеждает производительность.
+- Клавиатура и мышь. Стандартные раскладки Fortnite: WASD, пробел — прыжок и глайдер, Shift — спринт, E — взаимодействие, правая кнопка — прицел, R — перезарядка, 1-6 — панель оружия, Q — режим строительства, F1-F5 — детали построек, M — карта, Tab — инвентарь.
+
+Ход игры
+
+1. Лобби. Игрок выбирает Solo, Duo или Squad и жмёт READY. Все режимы собирают очередь; боты добивают лобби до 100 (99 ботов и я).
+2. Остров спавна. 10 секунд: можно подбирать оружие, стрелять и бить людей, но урона нет. Ничего не переносится в матч.
+3. Батл-бас. Летит маршрутом через остров. Прыгать можно только над сушей. Всех, кто остался на борту к концу маршрута, выбрасывает автоматически.
+4. Затяжной прыжок. Свободное падение с характерным следом Fortnite. Глайдер раскрывается сам на фиксированной высоте над землёй; пробел складывает и раскрывает его снова, чтобы можно было спланировать в другое место.
+5. Приземление и лут. Сундуки, лут на полу, ящики с патронами. У оружия есть редкость, от обычного до легендарного. Кирка всегда в слоте 1 и используется для добычи дерева, кирпича и металла.
+6. Строительство. Стены, полы, лестницы, крыши — из добытых материалов, точно как в Fortnite.
+7. Шторм. Круг, который сжимается фазами с настоящими таймингами Fortnite и нарастающим уроном, по всей карте.
+8. Победа. Последний выживший получает экран Victory Royale. Смерть показывает режим наблюдателя или возврат в лобби.</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">02</div>
+      <div>
+        <h3>ЛЕНДИНГ, КОТОРЫЙ НЕ <span class="c">ОРЁТ «МЕНЯ СДЕЛАЛА НЕЙРОНКА»</span></h3>
+        <p class="desc">Творческого направления не даёшь вообще. Именно поэтому тест и работает: видно, что модель придумает сама, без твоей помощи.</p>
+        <ul class="acts">
+          <li>Один и тот же промпт уходит обеим моделям</li>
+          <li>Функциональность не проверяешь — смотришь только на внешний вид</li>
+          <li>Ставь результаты рядом в соседних вкладках и сравнивай</li>
+        </ul>
+        <div class="pr">
+          <div class="hd"><span class="lb">💬 Промпт 2 — лендинг турагентства</span><button class="cp">Скопировать</button></div>
+          <pre>Спроектируй и собери выдающийся лендинг для AI-сервиса планирования путешествий.
+
+Продукт:
+Путешественник вводит, откуда он едет, куда хочет попасть, и несколько пожеланий к поездке. Продукт создаёт персональный маршрут по дням — с активностями, местами, где поесть, практическими деталями поездки и впечатлениями, которые человек сам бы никогда не нашёл.
+
+Аудитория:
+Самостоятельные путешественники, которым нравится находить интересные места, но не хочется тратить часы на поиск и организацию поездки.
+
+Твоя задача:
+Сделай законченный, вылизанный, адаптивный лендинг. Это задача по фронтенд-дизайну; бэкенд, настоящая AI-генерация, авторизация и интеграции бронирования не нужны.
+
+Придумай продукту название и отчётливую визуальную айдентику. Художественное направление, типографика, цвета, изображения, вёрстка и движение — полностью на твоё усмотрение.
+
+Опыт должен:
+- Делать назначение и ценность продукта понятными мгновенно.
+- Давать посетителю очевидный способ начать: ясно подписанные поля отправления и назначения плюс главный призыв к действию. Дополнительные предпочтения добавляй только там, где они улучшают опыт.
+- Показывать убедительный пример маршрута, который получит пользователь. Возьми как образец пятидневную поездку из Чикаго в Лиссабон, включи в неё хотя бы одну неожиданную находку и одну полезную практическую деталь.
+- Объяснять, как работает планирование — сжатым, конкретным текстом.
+- Ощущаться продуманно спроектированным и на десктопе, и на мобильном.
+
+Ожидания по дизайну:
+Целься в запоминающийся travel-бренд с цельной визуальной точкой зрения. Принимай осознанные решения по композиции, типографике, отступам и изображениям. Балансируй визуальный удар с читаемостью и удобством.
+
+Сам выбери секции, которые лучше всего рассказывают историю продукта; обязательного количества секций или шаблона нет. Пиши готовый текст. Никакого lorem ipsum, выдуманных отзывов, придуманных цифр пользователей и необоснованных заявлений.
+
+Используй настоящие или сгенерированные изображения, если они усиливают дизайн. Убедись, что ассеты грузятся надёжно. Движение применяй осмысленно и уважай настройку уменьшенной анимации. Обеспечь читаемый контраст, видимый фокус с клавиатуры и доступные подписи полей формы.
+
+Поведение прототипа:
+Поля поездки должны редактироваться. Главное действие должно раскрывать или вести к явно обозначенному примеру маршрута на локальных заглушечных данных. Держи это взаимодействие лёгким. Любые другие элементы управления, которые ты добавишь, должны делать что-то осмысленное.
+
+Процесс и выдача:
+Используй любые доступные скиллы, исследования, библиотеки и инструменты для ассетов. Принимай дизайн-решения сам, не задавая уточняющих вопросов.
+
+Собери страницу, а не останавливайся на предложении или макете. Осмотри отрисованный результат в десктопном и мобильном размере, если твоё окружение это позволяет, и почини всё, что найдёшь.
+
+Отдай запускаемую реализацию и доступное превью средствами своего окружения. Коротко объясни своё дизайн-направление и назови проверки, которые ты не смог выполнить.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plate rv">
+    <img id="plate2" src="img/02-schet.png" alt="">
+    <div class="grad"></div>
+    <div class="cap">
+      <div class="kick">Счёт после второго раунда</div>
+      <div class="big">Два теста позади, разрыв уже виден</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="step">
+      <div class="num">03</div>
+      <div>
+        <h3>МОУШН-ГРАФИКА, В КОТОРУЮ ТЫ <span class="g">НЕ ЛЕЗЕШЬ РУКАМИ</span></h3>
+        <p class="desc">Подключаешь Higgsfield MCP — и дальше модель сама выбирает видеомодель, раскидывает сцены и собирает ролик. Ты только формулируешь задачу.</p>
+        <ul class="acts">
+          <li>Подключи Higgsfield MCP к своей модели</li>
+          <li>Отправь промпт и не вмешивайся в процесс</li>
+          <li>Сравни, что вернули обе модели на одну и ту же задачу</li>
+        </ul>
+        <div class="pr">
+          <div class="hd"><span class="lb">💬 Промпт 3 — моушн-графика</span><button class="cp">Скопировать</button></div>
+          <pre>Сделай 15-секундный двухмерный анимационный ролик о том, как искусственный интеллект захватывает мир — с иронией, как страшилку, которую рассказывают всерьёз.
+
+Покажи по шагам: человек доверяет нейросети первую мелкую задачу, дальше ей отдают переписку, потом деньги, потом решения, потом заводы и энергосети; людей на кадрах становится всё меньше, машин всё больше; в финале — планета, работающая сама по себе, и один человек, который всё ещё жмёт Enter.
+
+Стиль: чистая плоская 2D-графика, ограниченная палитра с одним тревожным акцентным цветом, крупные читаемые подписи на экране, плавные переходы между кадрами. Никакого закадрового голоса, только текст и музыка. Формат 16:9.</pre>
+        </div>
+        <div class="note rv"><b>Про длину клипа.</b> На месячных тарифах Higgsfield один клип максимум десять секунд — пятнадцатисекундный ролик уйдёт в два куска. На старшем тарифе влезает одной генерацией.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">04</div>
+      <div>
+        <h3>3D-ГЛОБУС С <span class="c">ДУГАМИ ПЕРЕЛЁТОВ</span></h3>
+        <p class="desc">Финальный тест. Здесь ты специально даёшь простор для зрелища и одну свободную строку — пусть модель придумает механику, которой ты не просил.</p>
+        <ul class="acts">
+          <li>Отправь промпт обеим моделям без правок</li>
+          <li>Смотри, что каждая придумала сверх задания</li>
+          <li>Проверь, работает ли кнопка сохранения — спойлер: нет</li>
+        </ul>
+        <div class="pr">
+          <div class="hd"><span class="lb">💬 Промпт 4 — 3D-глобус</span><button class="cp">Скопировать</button></div>
+          <pre>Собери веб-приложение для поиска и планирования перелётов, построенное вокруг трёхмерного глобуса. Это задача на визуальное зрелище: у тебя полная свобода в художественном направлении, и я хочу, чтобы результат производил впечатление.
+
+Основа экрана — вращающийся трёхмерный глобус Земли на тёмном фоне. Города отмечены точками, между ними рисуются дуги маршрутов. Глобус вращается перетаскиванием, приближается колесом.
+
+Пользователь выбирает аэропорт отправления и аэропорт назначения из выпадающих списков. Как только выбран второй, на глобусе строится дуга перелёта, а внизу появляется плашка с деталями: количество пересадок, время в пути, погода в точке назначения и примерная цена билета туда-обратно.
+
+Сбоку — панель со списком направлений и ценами, которые видно сразу, без выбора.
+
+По кнопке «исследовать город» разворачивается карточка места: изображение, короткое описание, погода, список из нескольких занятий, которые там стоит сделать, и возможность сохранить маршрут.
+
+Добавь одну необычную механику по своему усмотрению, которая использует то, что это именно глобус, а не карта.
+
+Стек: работает в браузере, локальные заглушечные данные, без бэкенда. Пиши готовый текст, никаких заглушек-рыбы. Собери страницу до рабочего состояния, а не до макета, и почини всё, что найдёшь при осмотре результата.</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">05</div>
+      <div>
+        <h3>ПРЕВРАТИТЬ МАКЕТ В <span class="g">НАСТОЯЩЕЕ ПРИЛОЖЕНИЕ</span></h3>
+        <p class="desc">Обе модели рисуют кнопку «сохранить маршрут», за которой не стоит ничего. Нажал, перезагрузил страницу — и всё пропало. Это чинится базой за полторы минуты.</p>
+        <ul class="acts">
+          <li>Заведи проект в Supabase — имя, регион, пароль базы</li>
+          <li>Создай таблицу под маршруты: кто сохранил, откуда, куда, когда</li>
+          <li>Включи вход по почте</li>
+          <li>Отправь модели промпт и дай ей подключить базу самой</li>
+        </ul>
+        <div class="pr">
+          <div class="hd"><span class="lb">💬 Промпт 5 — подключение базы</span><button class="cp">Скопировать</button></div>
+          <pre>подключи к этому приложению supabase: заведи вход по почте и сохраняй маршруты в таблицу. кнопка «сохранить маршрут» должна реально писать в базу, а при перезагрузке страницы мои сохранённые маршруты должны подтягиваться обратно. ключи возьми из переменных окружения, в код не зашивай</pre>
+        </div>
+        <div class="note rv"><b>Проверка простая.</b> Сохрани маршрут, перезагрузи страницу. Маршрут на месте — значит перед тобой уже приложение, а не картинка.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plate rv">
+    <img id="plate3" src="img/03-perchatki.png" alt="">
+    <div class="grad"></div>
+    <div class="cap">
+      <div class="kick">Четыре раунда позади</div>
+      <div class="big">Обе модели сильные. Вопрос только в том, за что ты платишь</div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="links" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="rv">🔗 ВСЕ <span class="gd">ССЫЛКИ</span></h2>
+    <p class="lead rv">Всё, что открывалось на экране в этом видео.</p>
+    <a class="lk rv" href="https://chatgpt.com" target="_blank" rel="noopener"><span class="ic">🟢</span><span><span class="nm">Codex · GPT-6 Astra</span><br><span class="u">chatgpt.com</span></span></a>
+    <a class="lk rv" href="https://claude.ai" target="_blank" rel="noopener"><span class="ic">🟠</span><span><span class="nm">Claude · Fable 5.1</span><br><span class="u">claude.ai</span></span></a>
+    <a class="lk rv" href="https://higgsfield.ai" target="_blank" rel="noopener"><span class="ic">🎬</span><span><span class="nm">Higgsfield</span><br><span class="u">higgsfield.ai</span></span></a>
+    <a class="lk rv" href="https://supabase.com" target="_blank" rel="noopener"><span class="ic">🗄️</span><span><span class="nm">Supabase</span><br><span class="u">supabase.com</span></span></a>
+    <a class="lk rv" href="https://openai.com/index/gpt-6-astra" target="_blank" rel="noopener"><span class="ic">📄</span><span><span class="nm">Страница релиза GPT-6 Astra</span><br><span class="u">openai.com/index/gpt-6-astra</span></span></a>
+    <a class="lk rv" href="https://www.anthropic.com/claude-fable-and-mythos-5-1" target="_blank" rel="noopener"><span class="ic">📄</span><span><span class="nm">Страница релиза Claude Fable 5.1</span><br><span class="u">anthropic.com/claude-fable-and-mythos-5-1</span></span></a>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="cta rv">
+    <a class="hit" href="https://t.me/mastodont_aibot?start=mini_kurs" target="_blank" rel="noopener" aria-label="Забрать интенсив"></a>
+    <h2>ПЕРВЫЕ <span class="gd">$2К</span> НА ИИ — БЕСПЛАТНЫЙ ИНТЕНСИВ</h2>
+    <div class="ctacols">
+      <div>
+        <h4>Внутри</h4>
+        <ul>
+          <li>✅ Реальный демо AntiGravity вживую</li>
+          <li>✅ Софт, который за 5 минут находит компании без сайтов с готовыми контактами</li>
+          <li>✅ Кейсы учеников: $1650 за 3 проекта без команды</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Два бонуса в конце</h4>
+        <ul>
+          <li>💰 50 скучных и самых прибыльных ниш без конкуренции</li>
+          <li>🚀 Чек-лист: первые $500 за 7 дней</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ctabot">
+      <div class="fr"><span>Бесплатно.</span> Навсегда.</div>
+      <a class="ctabtn" href="https://t.me/mastodont_aibot?start=mini_kurs" target="_blank" rel="noopener">Забрать интенсив</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fb">МАСТОДОНТ</div>
+    <div class="ft">AI и нейросети - просто, по делу</div>
+    <div class="ft" style="margin-top:14px"><a href="#" id="ytcopy">ИИ МАСТОДОНТ — скопировать название канала</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var prog=document.getElementById('prog');
+  var glow=document.getElementById('cursorglow');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?(window.scrollY/h*100):0)+'%';
+    if(!reduce){
+      var hi=document.getElementById('heroimg');
+      if(hi) hi.style.transform='translateY('+(window.scrollY*0.06)+'px)';
+      ['plate2','plate3'].forEach(function(id){
+        var el=document.getElementById(id); if(!el) return;
+        var r=el.getBoundingClientRect();
+        if(r.bottom>0&&r.top<window.innerHeight){
+          var p=(window.innerHeight-r.top)/(window.innerHeight+r.height)-0.5;
+          el.style.transform='translateY('+(p*26)+'px)';
+        }
+      });
+    }
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  if(!reduce){
+    document.addEventListener('mousemove',function(e){
+      glow.style.opacity='1';
+      glow.style.left=e.clientX+'px'; glow.style.top=e.clientY+'px';
+    });
+    document.querySelectorAll('.card').forEach(function(c){
+      c.addEventListener('mousemove',function(e){
+        var r=c.getBoundingClientRect();
+        var x=(e.clientX-r.left)/r.width-0.5, y=(e.clientY-r.top)/r.height-0.5;
+        c.style.transform='perspective(900px) rotateY('+(x*7)+'deg) rotateX('+(-y*7)+'deg) translateY(-3px)';
+      });
+      c.addEventListener('mouseleave',function(){c.style.transform=''});
+    });
+  }
+
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el,i){
+    if(el.getBoundingClientRect().top < window.innerHeight*1.05){ el.classList.add('in'); el.style.transition='none'; return; }
+    el.style.transitionDelay=(i%4*70)+'ms';
+    io.observe(el);
+  });
+
+  document.querySelectorAll('.cp').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.closest('.pr').querySelector('pre').innerText;
+      navigator.clipboard.writeText(t).then(function(){
+        var old=b.textContent; b.textContent='✓ Скопировано!'; b.classList.add('ok');
+        setTimeout(function(){b.textContent=old;b.classList.remove('ok')},2000);
+      });
+    });
+  });
+
+  var yc=document.getElementById('ytcopy');
+  if(yc) yc.addEventListener('click',function(e){
+    e.preventDefault();
+    navigator.clipboard.writeText('ИИ МАСТОДОНТ').then(function(){
+      var o=yc.textContent; yc.textContent='✓ Скопировано';
+      setTimeout(function(){yc.textContent=o},2000);
+    });
+  });
+})();
+</script>
+</body>
+</html>
